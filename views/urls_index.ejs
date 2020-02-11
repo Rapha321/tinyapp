@@ -14,34 +14,38 @@
 
   <main style="margin: 1em;">
     <h3>My URLs</h3>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Short URL</th>
-          <th scope="col">Long URL</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% for(let url in urls) { %>
-          <tr>
-            <td><%= url %></td>
-            <td><%= urls[url] %></td>
-            <td>
-                <button class="btn btn-outline-primary"><a href="/urls/<%= url %>">Edit</a></button>
-            </td>
-            <td>
-                <form method="POST" action="/urls/<%= url %>/delete">
-                  <button class="btn btn-outline-danger">Delete</button>
-                </form>
-            </td>
-          </tr>
-        <% } %>
-      </tbody>
-    </table>
 
-    <a href="urls/new">Create a short URL</a>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Short URL</th>
+            <th scope="col">Long URL</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+      <% if (username) { %>
+        <tbody>
+          <% for(let url in urls) { %>
+            <tr>
+              <td><%= url %></td>
+              <td><%= urls[url] %></td>
+              <td>
+                  <button class="btn btn-outline-primary"><a href="/urls/<%= url %>">Edit</a></button>
+              </td>
+              <td>
+                  <form method="POST" action="/urls/<%= url %>/delete">
+                    <button class="btn btn-outline-danger">Delete</button>
+                  </form>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+
+      <a href="urls/new">Create a short URL</a>
+    <% } %>
+
 
   </main>
   <!-- Bootstrap JS -->

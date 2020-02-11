@@ -2,9 +2,12 @@ const express = require("express");
 const app = express();
 const PORT = 8080;
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
 app.set("view engine", "ejs");
+
 
 // GENERATE RANDOM SHORT URL
 function generateRandomString() {
@@ -25,7 +28,8 @@ const urlDatabase = {
 // DISPLAY SHORT AND LONG URLs
 app.get("/urls", (req, res) => {
   let templateVars = {
-                        urls: urlDatabase,
+                        username: req.cookies["username"],
+                        urls: urlDatabase
                       };
   res.render("urls_index", templateVars);
 });
@@ -36,7 +40,11 @@ app.get("/urls.json", (req, res) => {
 
 // RENDER PAGE TO CREATE NEW URL
 app.get('/urls/new', (req, res) => {
-  res.render('urls_new');
+  let templateVars = {
+                      username: req.cookies["username"],
+                      urls: urlDatabase
+                    };
+  res.render('urls_new', templateVars);
 });
 
 // ADD NEW SHORT & LONG URL TO DATABASE
@@ -49,11 +57,12 @@ app.post("/urls", (req, res) => {
 // DISPLAY LONG & SHORT URL FOR SPECIFIC SHORT URL
 app.get("/urls/:shortURL", (req, res) => {
   let templateVars = {
+                       username: req.cookies["username"],
                        urls: urlDatabase,
                        shortURL: req.params.shortURL,
                        longURL: urlDatabase[req.params.shortURL]
                      }
-  res.render("urls_show", templateVars)
+  res.render("urls_show", templateVars);
 });
 
 // REDIRECT TO ACTUAL LONG URL WEBSITE
@@ -70,6 +79,17 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 app.post("/urls/:id/update", (req, res) => {
   urlDatabase[req.params.id] = req.body.longURL;
   res.redirect('/urls')
+})
+
+app.post("/login", (req, res) => {
+  res.cookie('username', 'username');
+  console.log("cookie: ", req.cookies['username'])
+  res.redirect("/urls");
+});
+
+app.post("/logout", (req, res) => {
+  res.clearCookie('username');
+  res.redirect('/urls');
 })
 
 
