@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <title>TinyApp</title>
+</head>
+<body>
+<%- include ('./partials/_header') %>
+
+<h2 style="margin: 0.5em">Create Account:</h2>
+
+<form method="POST" action="/register">
+  <label style="margin: 0.5em">Email address</label>
+  <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px; margin: 0.5em">
+  <label style="margin: 0.5em">Password</label>
+  <input class="form-control" type="password" name="password" placeholder="Password" style="width: 300px; margin: 0.5em">
+  <button class="btn btn-primary" style="margin: 0.5em">Register</button>
+</form>
+
+</body>
+</html>
+
